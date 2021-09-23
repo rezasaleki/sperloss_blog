@@ -109,7 +109,35 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        return "ok";
+        $data = request()->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'activated' => ['required'],
+            'image' => ['required', 'image'],
+            'user_id' => [],
+            'thumbnail' => ['image']
+        ]);
+
+        if (request('image')) {
+            $imagePath1 = request('image')->store('uploads', 'public'); // upload image to storage directory and create symbolic link to public directory
+            Image::make(public_path("storage/{$imagePath1}"))->save(); // fit image to custome size by package intervention
+        }
+
+        if (request('thumbnail')) {
+            $imagePath2 = request('thumbnail')->store('uploads', 'public'); // upload image to storage directory and create symbolic link to public directory
+            Image::make(public_path("storage/{$imagePath2}"))->fit(100, 100)->save();
+        }
+
+        $post->update(array_merge(
+            $data,
+            [
+                'image' => $imagePath1 ?? null,
+                'thumbnail' => $imagePath2 ?? null
+            ]
+        )); // save post by relationship
+
+        $profile = Profile::where('user_id', auth()->user()->id)->first();
+        return redirect("profiles/" . $profile->id);
     }
 
     /**

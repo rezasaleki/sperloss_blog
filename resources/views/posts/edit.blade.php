@@ -50,13 +50,11 @@
 
                         <div class="col-md-6">
                             <textarea id="content" class="form-control" @error('content') is-invalid @enderror name="content" rows="7">{{ old('content') ?? str_replace(' ', '', $post->content) }}</textarea>
-
-                                @if($errors->has('content'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('content') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                            @if($errors->has('content'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('content') }}</strong>
+                                </span>
+                            @endif
 
                             @error('content')
                                 <span class="invalid-feedback" role="alert">
@@ -78,6 +76,23 @@
                             @if($errors->has('image'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('image') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="thumbnail" class="col-md-4 col-form-label text-md-right">{{ __('thumbnail') }}</label>
+
+                        <div class="col-md-6 pb-3">
+                            <input id="thumbnail"
+                                type="file"
+                                class="form-control-file @error('thumbnail') is-invalid @enderror"
+                                name="thumbnail" value="{{ old('thumbnail') }}" autocomplete="thumbnail">
+
+                            @if($errors->has('thumbnail'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('thumbnail') }}</strong>
                                 </span>
                             @endif
                         </div>
