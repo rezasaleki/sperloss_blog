@@ -7,7 +7,7 @@
             <img class="rounded-circle" style="width:10rem" src="{{ $profile?->profileImage() }}" alt="freeCodeCamp">
         </div>
         <div class="col-9 pt-5">
-            <div class="d-flex justify-content-between align-items-baseline">
+            <div class="d-flex justify-content-md-between align-items-baseline">
                 <h1>{{ $profile->user->username }}</h1>
                 <h5>
                     @can('update', $profile)
@@ -28,6 +28,9 @@
             </p>
             <div>
                 <a style="font-weight: bold;" href="{{ $profile->website }}">{{ $profile?->website ?? '' }}</a>
+            </div>
+            <div class="float-right">
+                <a type="submit" class="btn btn-danger" href="{{ route('posts.index') }}">My Posts</a>
             </div>
         </div>
     </div>
