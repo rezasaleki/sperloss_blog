@@ -26,11 +26,12 @@
                         <td style="white-space: nowrap;">
                             <a class="btn btn-info" href="{{ route('posts.edit', [$post->id]) }}">Edit</a>
                             <a class="btn btn-danger" onclick="event.preventDefault();
-                            document.getElementById('delete-form').submit();">Delete</a>
+                            document.getElementById('delete-form_{{$post->id}}').submit();">Delete</a>
                         </td>
                     </tr>
-                    <form id="delete-form" action="{{ route('posts.destroy', [$post->id]) }}" method="POST" style="display: none;">
+                    <form method="POST" id="delete-form_{{ $post->id }}" name="delete-form_{{ $post->id }}" action="{{ route('posts.destroy', [$post->id]) }}" style="display: none;">
                         @csrf
+                        @method("DELETE")
                     </form>
                     @endforeach
                 </tbody>
