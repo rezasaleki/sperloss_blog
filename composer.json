@@ -1,7 +1,7 @@
 {
     "name": "laravel/sperloos",
     "type": "project",
-    "description": "The Sperloos Blog.",
+    "description": "(The Sperloos Blog) Blog To display and create posts for each user, users can be active in the blog and see their own posts and those of other users.",
     "keywords": [
         "framework",
         "laravel"
