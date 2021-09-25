@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Profile;
+use App\User;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -32,6 +34,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        // $this->authorize('create', User::class);
         return view('posts.create');
     }
 
@@ -43,6 +46,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->authorize('create', Post::class);
+        // Gate::allows('create', Post::class);
+        // Post::class means that gate should point to PostPolicy::class
+
         $data = request()->validate([
             'title' => 'required',
             'content' => 'required',
@@ -86,6 +94,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $this->authorize('view', $post);
         return view('posts.show', compact('post'));
     }
 
@@ -148,6 +157,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
         return redirect()->back();
     }
